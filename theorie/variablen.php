@@ -29,6 +29,8 @@
 	];
 
 		
+
+	echo '<h1>' . $meinTitel . '</h1>';
 		
 		
 		

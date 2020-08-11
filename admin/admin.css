@@ -1,0 +1,122 @@
+/* CSS Document */
+
+
+@font-face {
+  font-family: 'wmp26-icons';
+  src:
+    url('fonts/wmp26-icons.ttf?k7ggwe') format('truetype'),
+    url('fonts/wmp26-icons.woff?k7ggwe') format('woff'),
+    url('fonts/wmp26-icons.svg?k7ggwe#wmp26-icons') format('svg');
+  font-weight: normal;
+  font-style: normal;
+  font-display: block;
+}
+
+[class^="wmp26-icon-"], [class*=" wmp26-icon-"] {
+  /* use !important to prevent issues with browser extensions that change fonts */
+  font-family: 'wmp26-icons' !important;
+  speak: never;
+  font-style: normal;
+  font-weight: normal;
+  font-variant: normal;
+  text-transform: none;
+  line-height: 1;
+  text-decoration:none;
+  /* Better Font Rendering =========== */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.wmp26-icon-pencil:before {
+  content: "\e905";
+}
+.wmp26-icon-bin:before {
+  content: "\e9ac";
+}
+.wmp26-icon-plus:before {
+  content: "\ea0a";
+}
+
+
+
+
+
+* {
+	font-family: Helvetica, Arial, "sans-serif";
+	box-sizing: border-box;
+}
+
+body {
+	display: grid;
+	grid-template-columns: 15rem 1fr;
+	align-items: stretch;
+	padding: 0;
+	grid-gap: 1rem;
+	margin: 0;
+}
+
+.linke-spalte {
+	background-color: #f0f0f0;
+}
+
+
+table {
+	border-collapse: collapse;
+	width: 100%;
+}
+
+td {
+	border-bottom: 1px solid #ccc;
+	padding: 0.5rem 0;
+}
+
+form {
+	padding: 1rem;
+	background-color: #f9f9f0;
+}
+
+label {
+	font-size: 0.75rem;
+	text-transform: uppercase;
+}
+
+input,
+textarea {
+	font-size: 1rem;
+	border: 3px solid #aaa;
+	padding: 0.5rem;
+	width: 100%;
+	max-width: 30rem;
+	border-radius: 0;
+}
+input:focus,
+textarea:focus {
+	color: #b00;
+}
+
+textarea {
+	height: 10rem;
+	min-height: 10rem;
+	max-height: 30rem;
+	resize: vertical;
+}
+button {
+	border: none;
+	background-color: #b00;
+	color: white;
+	padding: 0.5rem 1rem;
+	font-weight: bold;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
