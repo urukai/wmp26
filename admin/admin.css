@@ -80,6 +80,11 @@ label {
 	text-transform: uppercase;
 }
 
+label.neben-checkbox {
+	font-size: inherit;
+	text-transform: none;
+}
+
 input,
 textarea {
 	font-size: 1rem;
@@ -93,6 +98,19 @@ input:focus,
 textarea:focus {
 	color: #b00;
 }
+input[type="checkbox"] {
+	width: 1.5rem;
+	height: 1.5rem;
+	border: 2px solid #444;
+	appearance: none;
+	display: inline-block;
+	margin: 0 0.5rem 0 0;
+	vertical-align: middle;
+}
+input[type="checkbox"]:checked {
+	background-color: #b00;
+}
+
 
 textarea {
 	height: 10rem;
@@ -109,6 +127,12 @@ button {
 }
 
 
+.vorschau {
+	display: block;
+	width: 14rem;
+	height: 14rem;
+	object-fit: cover;
+}
 
 
 

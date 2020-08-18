@@ -28,7 +28,7 @@
 				
 				// Zelle mit den Lösch-Link
 				echo '<td>';
-				echo '<a class="wmp26-icon-bin" href="#"></a>';
+				echo '<a class="wmp26-icon-bin" href="#" title="löschen"></a>';
 				echo '</td>';
 				
 				// Zelle mit dem Bearbeiten-Link
@@ -44,7 +44,7 @@
 				echo $datensatz[ 'titel' ];
 				echo '</td>';
 				
-				// Datum
+				// Datum, z.B. "2020-08-18 10:08:54"
 				echo '<td>';
 				$sekunden = strtotime( $datensatz[ 'datum' ] );
 				echo strftime( '%a, %d.%m.%Y', $sekunden );

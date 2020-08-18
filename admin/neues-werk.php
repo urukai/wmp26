@@ -4,9 +4,9 @@
 	include '../config.php';
 	include '../functions.php';
 
-	include 'kopfbereich.php';
-
-	echo '<h1>Neues Werk erfassen</h1>';
-
-
-	include 'fussbereich.php';
+	// Neues Werk erfassen
+	$sql = 'INSERT INTO werke ( id ) VALUES ( NULL )';
+	$neueId = db( $sql );
+	
+	// Auf das Formular weiterleiten
+	header( 'Location: werk-bearbeiten.php?id=' . $neueId );

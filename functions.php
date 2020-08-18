@@ -13,11 +13,18 @@
 		// Zeichenkodierung der Datenübertragung einstellen
 		mysqli_set_charset( $verbindung, 'UTF8' );
 		// Anfrage schicken
-		$zeiger = mysqli_query( $verbindung, $sqlStatement );
+		$rueckgabeWert = mysqli_query( $verbindung, $sqlStatement );
+		
+		// Handelt es sich um ein INSERT-Statement?
+		// INSERT INTO vornamen ( vorname ) VALUES ( "Simon" )
+		if ( stripos( $sqlStatement, 'insert' ) === 0 ) {
+			$rueckgabeWert = mysqli_insert_id( $verbindung );
+		}
+		
 		// Verbindung schliessen
 		mysqli_close( $verbindung );
 		// Zeiger zurückliefern
-		return $zeiger;
+		return $rueckgabeWert;
 	}
 
 
