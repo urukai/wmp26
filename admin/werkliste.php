@@ -4,6 +4,31 @@
 	include '../config.php';
 	include '../functions.php';
 
+	// Datensatz löschen, sofern gewünscht
+	$loeschenId = filter_input( INPUT_GET, 'loeschen', FILTER_VALIDATE_INT );
+	if ( $loeschenId ) {
+		// Vielleicht hat dieser Datensatz ein Bild zugeordnet.
+		$res = db( 'SELECT bild FROM werke WHERE id = ' . $loeschenId );
+		$zuLoeschenderDatensatz = mysqli_fetch_assoc( $res );
+		/*
+			[
+				'bild' => 'werk-5cd123.456789.jpg'
+			]
+		*/
+		// Wenn ein Bildname gespeichert ist und wenn das Bild vorhanden ist
+		if ( $zuLoeschenderDatensatz[ 'bild' ] && 
+			 file_exists( '../uploads/' . $zuLoeschenderDatensatz[ 'bild' ] ) ) {
+			
+			// Das Bild löschen
+			unlink( '../uploads/' . $zuLoeschenderDatensatz[ 'bild' ] );
+		}
+		
+		// jetzt eigentlichen Datensatz löschen
+		// DELETE FROM werke WHERE id=42 LIMIT 1
+		db( 'DELETE FROM werke WHERE id = ' . $loeschenId . ' LIMIT 1' );
+		
+	}
+
 	include 'kopfbereich.php';
 
 	echo '<h1>Gespeicherte Werke</h1>';
@@ -28,7 +53,7 @@
 				
 				// Zelle mit den Lösch-Link
 				echo '<td>';
-				echo '<a class="wmp26-icon-bin" href="#" title="löschen"></a>';
+				echo '<a class="wmp26-icon-bin warnen" href="werkliste.php?loeschen=' . $datensatz[ 'id' ] . '" title="löschen"></a>';
 				echo '</td>';
 				
 				// Zelle mit dem Bearbeiten-Link

@@ -15,7 +15,7 @@
 			id => 42,
 			titel => 'Mein Superbild',
 			beschrieb => 'blablababl',
-			bild => 'https://..',
+			bild => 'werk-5cd456789.123456.jpg',
 			datum => '2020-08-11 12:45:03'
 		]
 	
@@ -35,13 +35,15 @@
 	echo nl2br( $werk[ 'beschrieb' ] );
 	echo '</p>';
 
+	// Eigentlich müssten wir hier noch fragen, ob es ein Bild 
+	// gibt und ob es noch existiert 
 	// Bild, verpackt in ein schlaues Bild-Kästchen
 	echo '<figure>';
 	// <img src="
-	echo '<img src="';
-	// <img src="https://www.example.com/mein-bild.jpg
+	echo '<img src="uploads/';
+	// <img src="uploads/mein-bild.jpg
 	echo $werk[ 'bild' ];
-	// <img src="https://www.example.com/mein-bild.jpg" alt="">
+	// <img src="uploads/mein-bild.jpg" alt="">
 	echo '" alt="">';
 	echo '</figure>';
 
@@ -56,6 +58,35 @@
 
 	echo '</p>';
 
+
+	echo '<p>';
+	// Zugeordnete Kategorien auflisten
+	$sql = sprintf( 'SELECT 
+				k.name 
+			FROM 
+				kategorien k, 
+				zuordnungen z 
+			WHERE 
+				z.werk_id = %d AND 
+				k.id = z.kategorie_id 
+			ORDER BY
+				k.name', 
+				$id );
+	$res = db( $sql );
+
+	$ausgabe = [];
+	while( $kategorie = mysqli_fetch_assoc( $res ) ) {
+		/*
+		[
+			'name' => 'Malerei'
+		]
+		*/
+		$ausgabe[] = $kategorie[ 'name' ];
+	}
+
+	echo implode( ', ', $ausgabe );
+
+	echo '</p>';
 	
 
 

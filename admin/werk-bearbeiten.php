@@ -10,9 +10,22 @@
 	$id = filter_input( INPUT_GET, 'id', FILTER_VALIDATE_INT );
 	$res = db( 'SELECT * FROM werke WHERE id=' . $id );
 	$werk = mysqli_fetch_assoc( $res );
+	/*
+		[
+			id => 4,
+			titel => 'Frosties',
+			beschrieb => 'Bla bla bla',
+			datum => '2020-08-12 10:45:20',
+			bild => 'werk-5c123456.78945.jpg'
+		]
 	
+	*/
+	
+
 	// Gibt es Korrekturen? Wurde das Formular verschickt?
 	if ( $_POST ) {
+		
+		
 		// Bisheriger Bildname als Zielname verwenden, damit
 		// das Update-Statement korrekt bleibt
 		$zielName = $werk[ 'bild' ];
@@ -22,6 +35,9 @@
 		if ( $bildMussWeg ) {
 			$zielName = '';
 		}
+		
+		// $_FILES ist ein verschachtelter Array
+		// print_r( $_FILES );
 		
 		
 		// Ist die hochgeladene Datei wirklich ein JPG-Bild?
@@ -85,6 +101,23 @@
 		$werk[ 'datum' ] = $neuesDatum;
 		$werk[ 'bild' ] = $zielName;
 		
+		// Kategorie-Zuordnungen speichern
+		// Erst mal alle Zuordnungen löschen
+		db( 'DELETE FROM zuordnungen WHERE werk_id=' . $id );
+		// Pro neue Zuordnung einen neuen Datensatz generieren
+		// ("Pro markierter Checkbox eine neue Zuordnung speichern")
+		foreach( $_POST[ 'kategorien' ] as $kategorieId ) {
+			$sql = sprintf( 'INSERT INTO 
+					 zuordnungen ( 
+					 	werk_id, 
+						kategorie_id 
+					 ) VALUES (
+					 	%d,
+						%d
+					 )', $id, $kategorieId );
+			db( $sql );
+		}
+		
 	}
 
 
@@ -145,6 +178,45 @@
 					 </p>';
 			}
 		?>	
+		
+		<h4>Kategorien</h4>
+		<p>
+			<?php
+				// Alle für dieses Werk zugeordneten Kategorie-IDs
+				// ermitteln und in einen brauchbaren Array übertragen
+				$res = db( 'SELECT kategorie_id FROM zuordnungen WHERE werk_id = ' . $id );
+				$zugeordnet = [];
+				while( $zuordnung = mysqli_fetch_assoc( $res ) ) {
+					$zugeordnet[] = $zuordnung[ 'kategorie_id' ];
+				}
+			
+			
+				// Pro Kategorie, die man wählen kann, 
+				// eine Checkbox hinsetzen. Wir holen alle 
+				// Kategorien aus der DB
+				$res = db( 'SELECT * FROM kategorien ORDER BY name' );
+				while( $kategorie = mysqli_fetch_assoc( $res ) ) {
+					echo '<label class="neben-checkbox untereinander">';
+					echo '<input type="checkbox" 
+								 name="kategorien[]" ';
+					// Ist diese Kategorie dem Werk zugeordnet?
+					if ( in_array( $kategorie[ 'id' ], $zugeordnet ) ) {
+						echo 'checked ';
+					}
+					
+					echo 'value="' . $kategorie[ 'id' ] . '">';
+					echo $kategorie[ 'name' ];
+					echo '</label>';
+				}
+			?>
+			
+		</p>	
+		
+		
+		
+		
+		
+		
 		
 		<p>
 			<button type="submit">Speichern</button>
